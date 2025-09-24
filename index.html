@@ -7,7 +7,7 @@
   <style>
     /* ===== Base (接近 god21 清爽風) ===== */
     :root {
-      --fg:#0f172a; --muted:#64748b; --border:#e2e8f0; --accent:#0ea5e9; --bg:#ffffff;
+      --fg:#0f172a; --muted:#000000; --border:#f0e2ea; --accent:#ff3271; --bg:#ffffff;
       --container: 1100px;
     }
     html,body { margin:0; background:var(--bg); color:var(--fg);
@@ -64,8 +64,11 @@
     .source-badge { display:inline-block; font-size:11px; color:#0369a1; background:#e0f2fe; border:1px solid #bae6fd; padding:2px 6px; border-radius:999px; margin-left:6px; vertical-align:middle; }
 
     .posts { display:grid; gap:14px; }
-    .card { border:1px solid var(--border); border-radius:14px; padding:16px; background:#fff;
+    .card {  border-radius:14px; padding:16px; background:#fff;
       display:grid; grid-template-columns:120px 1fr; gap:14px; }
+    .card:hover{
+        background:#f2dce7ad;
+    }
     @media (max-width:560px){ .card{ grid-template-columns:1fr; } }
     .thumb { width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:10px; background:#f8fafc; border:1px solid var(--border); }
     .card h3 { margin:0 0 6px; font-size:18px; line-height:1.3; }
@@ -75,14 +78,14 @@
     .status { text-align:center; color:var(--muted); padding:18px 0; font-size:14px; }
 
     /* Sidebar */
-    .sidebar { position:sticky; top:82px;}
-    .side-card { border:1px solid var(--border); border-radius:14px; padding:16px; background:#fff; height: 70vh; max-height: calc(100vh - 98px); overflow: auto; }
+    .sidebar { position: static; top: auto; }
+    .side-card { border:1px solid var(--border); border-radius:14px; padding:16px; background:#fff; margin-top: 70px; max-height: none; overflow: visible; }
     .side-title { margin:0 0 10px; font-size:16px; font-weight:800; }
     .blog-group { margin: 0 0 14px; }
     .blog-group h4 { margin: 12px 0 8px; font-size: 13px; color: var(--muted); font-weight: 800; letter-spacing: .5px; }
     .blog-list { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
     .blog-list a { display:block; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#f8fafc; color:var(--fg); }
-    .blog-list a.active { border-color:var(--accent); background:#eef8fd; }
+    .blog-list a.active { border-color:var(--accent); background:#fff1f5; }
     .blog-sub { display:block; font-size:12px; color:var(--muted); margin-top:2px; }
     .hint { font-size:12px; color:#0f766e; background:#ecfdf5; border:1px solid #a7f3d0; padding:8px 10px; border-radius:10px; margin-top:10px; }
 
@@ -91,6 +94,69 @@
     .sidebar { position: static; top: auto; }
     .side-card { max-height: none; overflow: visible; }
     }
+
+    /* === 側邊彈窗 Drawer === */
+    .drawer-overlay {
+    position: fixed; inset: 0;
+    display: flex;              
+    align-items: stretch; justify-content: flex-end;
+    background: rgba(15,23,42,.45);
+    opacity: 0;                  /* 淡入淡出 */
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .24s ease, visibility .24s step-end;
+    z-index: 100;
+    }
+    .drawer-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity .24s ease, visibility 0s linear; 
+    }
+
+    .drawer-panel {
+    width: 420px; max-width: 100%; height: 100%;
+    background: #fff; border-left: 1px solid var(--border);
+    box-shadow: -10px 0 30px rgba(15,23,42,.12);
+    padding: 18px 16px 16px; overflow: auto;
+    transform: translateX(100%);          
+    transition: transform .24s ease;      /* 滑入滑出 */
+    will-change: transform;
+    }
+    .drawer-overlay.open .drawer-panel {
+    transform: translateX(0);             /* 開啟→滑入 */
+    }
+
+    .drawer-close {
+    position: sticky; top: 0; float: right; border: 1px solid var(--border);
+    width: 36px; height: 36px; border-radius: 10px; background: #f8fafc; cursor: pointer;
+    }
+    .drawer-title { margin: 6px 0 8px; font-size: 20px; line-height: 1.35; font-weight: 800; }
+    .drawer-meta { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+    .drawer-thumb {
+    width: 100%; aspect-ratio: 16/9; object-fit: cover;
+    border-radius: 12px; border: 1px solid var(--border); background: #f8fafc;
+    }
+
+    .drawer-content { margin-top: 10px; font-size: 14px; line-height: 1.7; white-space: pre-wrap; }
+    .visit-btn {
+    display: inline-block; margin-top: 14px; width: 100%; text-align: center;
+    border-radius: 12px; padding: 12px 0; font-weight: 700;
+    background: #ff3271; color: #fff; border: 1px solid #ff3271;
+    }
+    .visit-btn:hover { filter: brightness(1.05); }
+
+    @media (max-width: 560px) {
+    .drawer-panel { width: 100%; border-left: 0; border-top: 1px solid var(--border); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+    .drawer-overlay, .drawer-panel { transition: none !important; }
+    }
+
+
+
 
   </style>
 </head>
@@ -171,10 +237,22 @@
         </div>
       </aside>
     </div>
+    <!-- === 側邊彈窗 === -->
+    <div id="drawer" class="drawer-overlay" aria-hidden="true">
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+        <button class="drawer-close" id="drawerClose" aria-label="關閉">✕</button>
+        <img id="drawerThumb" class="drawer-thumb" alt="" />
+        <h3 id="drawerTitle" class="drawer-title">標題</h3>
+        <div id="drawerMeta" class="drawer-meta"></div>
+        <div id="drawerContent" class="drawer-content"></div>
+        <a id="drawerVisit" class="visit-btn" href="#" target="_blank" rel="noopener">造訪網站 ↗</a>
+    </div>
+    </div>
+
   </main>
 
   <script>
-    /* === 預設縮圖（SVG Data URI，不需外連檔案） === */
+        /* 預設圖片 */
         const DEFAULT_THUMB =
         'data:image/svg+xml;utf8,' +
         encodeURIComponent(`
@@ -186,7 +264,7 @@
             </svg>
         `);
 
-        /* 從 YouTube 連結取出影片 ID，組縮圖 */
+        /* YouTube 縮圖 */
         function youTubeIdFromLink(link){
         try{
             const u = new URL(link);
@@ -200,7 +278,7 @@
         return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : '';
         }
 
-    /* ====== 資料來源清單（分組） ====== */
+    /* 友站資源清單 */
     const GROUPS = {
     sites: [
         { name: "艾莉嘻電影 Ellie See Movie", url: "https://providencebride.blogspot.com", type: "blogger", sub: "providencebride.blogspot.com" },
@@ -276,18 +354,91 @@
     function showHint(txt){ hintsEl.style.display = txt ? "block" : "none"; hintsEl.textContent = txt || ""; }
 
     function makeCard({title,link,date,author,summary,thumb}){
-    const card=document.createElement("article"); card.className="card";
-    const imgSrc = thumb || DEFAULT_THUMB;
-    card.innerHTML=`
-        <img class="thumb" src="${imgSrc}" alt="">
+    const card = document.createElement("article");
+    card.className = "card";
+
+    // 安全文字
+    const t  = title || "（無標題）";
+    const md = date ? formatDate(date) : "";
+    const au = author ? ` · ${author}` : "";
+    const sumText = summary || "";
+
+    // 彈窗可用的資料存在 data-*
+    card.dataset.title   = t;
+    card.dataset.link    = link || "#";
+    card.dataset.date    = md;
+    card.dataset.author  = author || "";
+    card.dataset.summary = sumText;
+    card.dataset.thumb   = (thumb || DEFAULT_THUMB);
+
+    card.innerHTML = `
+        <img class="thumb" src="${thumb || DEFAULT_THUMB}" alt="">
         <div>
-        <h3><a href="${link}" target="_blank" rel="noopener">${title||"（無標題）"}</a></h3>
-        <div class="meta">${date?formatDate(date):""}${author?` · ${author}`:""}</div>
-        <div class="summary">${summary||""}</div>
+        <h3><a href="${link || '#'}" target="_blank" rel="noopener">${t}</a></h3>
+        <div class="meta">${md}${au}</div>
+        <div class="summary">${sumText}</div>
         </div>`;
     return card;
     }
 
+
+    // Drawer DOM
+    const drawerEl     = document.getElementById("drawer");
+    const drawerClose  = document.getElementById("drawerClose");
+    const drawerThumb  = document.getElementById("drawerThumb");
+    const drawerTitle  = document.getElementById("drawerTitle");
+    const drawerMeta   = document.getElementById("drawerMeta");
+    const drawerContent= document.getElementById("drawerContent");
+    const drawerVisit  = document.getElementById("drawerVisit");
+
+    // 開/關
+    function openDrawer(data){
+    drawerThumb.src = data.thumb || DEFAULT_THUMB;
+    drawerTitle.textContent = data.title || "（無標題）";
+    drawerMeta.textContent  = [data.date || "", data.author ? `· ${data.author}` : ""].join(" ").trim();
+    drawerContent.textContent = data.summary || ""; // 用純文字摘要（安全）
+    drawerVisit.href = data.link || "#";
+
+    drawerEl.classList.add("open");
+    drawerEl.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+    }
+    function closeDrawer(){
+    drawerEl.classList.remove("open");
+    drawerEl.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
+    }
+
+    // 關閉事件：按鈕、按遮罩、ESC
+    drawerClose.addEventListener("click", closeDrawer);
+    drawerEl.addEventListener("click", (e)=> {
+    if (e.target === drawerEl) closeDrawer();
+    });
+    window.addEventListener("keydown", (e)=> {
+    if (e.key === "Escape" && drawerEl.classList.contains("open")) closeDrawer();
+    });
+
+    // 點任何卡片（或卡片內的標題連結）開啟 Drawer
+    postsEl.addEventListener("click", (e) => {
+    const card = e.target.closest(".card");
+    if (!card) return;
+
+    // 如果使用者按住 Ctrl/Cmd 想要在新分頁開連結，不要攔截
+    const anchor = e.target.closest("a");
+    if (anchor && (e.metaKey || e.ctrlKey)) return;
+
+    // 攔截預設導向，改為開彈窗
+    if (anchor) e.preventDefault();
+
+    openDrawer({
+        title:   card.dataset.title,
+        link:    card.dataset.link,
+        date:    card.dataset.date,
+        author:  card.dataset.author,
+        summary: card.dataset.summary,
+        thumb:   card.dataset.thumb
+    });
+    });
 
     /* ===== 取資料：Blogger / WordPress / RSS / YouTube ===== */
     const PROXY = url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
@@ -348,15 +499,15 @@
       return { title: siteTitle, items };
     }
 
-/* ========= 多重代理：任一成功就回傳文字 ========= */
-const PROXIES = [
-  // AllOrigins JSON: 回傳 { contents: "<xml..." }
-  (url) => ({ req: `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, mode: "json" }),
-  // AllOrigins RAW: 直接回純文字
-  (url) => ({ req: `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, mode: "text" }),
-  // isomorphic-git CORS 代理（簡單、常用）
-  (url) => ({ req: `https://cors.isomorphic-git.org/${url}`, mode: "text" }),
-];
+    /* ========= 多重代理：任一成功就回傳文字 ========= */
+    const PROXIES = [
+    // AllOrigins JSON: 回傳 { contents: "<xml..." }
+    (url) => ({ req: `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, mode: "json" }),
+    // AllOrigins RAW: 直接回純文字
+    (url) => ({ req: `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, mode: "text" }),
+    // isomorphic-git CORS 代理（簡單、常用）
+    (url) => ({ req: `https://cors.isomorphic-git.org/${url}`, mode: "text" }),
+    ];
 
 async function fetchTextThroughProxies(url){
   let lastErr;
