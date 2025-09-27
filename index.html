@@ -1,165 +1,523 @@
 <!doctype html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>最新文章聚合</title>
+
+  <title>友站連結</title>
+
   <style>
-    /* ===== Base (接近 god21 清爽風) ===== */
+    /* ===== Base ===== */
     :root {
-      --fg:#0f172a; --muted:#000000; --border:#f0e2ea; --accent:#ff3271; --bg:#ffffff;
+      --fg: #0f172a;
+      --muted: #000000;
+      --border: #f0e2ea;
+      --accent: #ff3271;
+      --bg: #ffffff;
       --container: 1100px;
     }
-    html,body { margin:0; background:var(--bg); color:var(--fg);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,"Noto Sans TC","Helvetica Neue",Arial,sans-serif; }
-    a { color: var(--fg); text-decoration: none; }
-    a:hover { color: var(--accent); }
 
-    .wrap { max-width: var(--container); margin: 0 auto; padding: 0 16px; }
+    html,
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Noto Sans TC", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    a {
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    .wrap {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 16px;
+    }
 
     /* ===== god21 風格 Header ===== */
-    .g21-header { position:sticky; top:0; z-index:40; background:#fff; border-bottom:1px solid var(--border); }
-    .g21-nav { display:flex; align-items:center; gap:24px; height:64px; }
-    .g21-logo { font-weight:800; letter-spacing:.5px; font-size:20px; color:var(--fg); }
-    .g21-logo img { height:28px; vertical-align:middle; }
+    .g21-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
 
-    .g21-burger { display:none; margin-left:auto; background:none; border:0; width:40px; height:32px; cursor:pointer; }
-    .g21-burger span { display:block; height:2px; background:var(--fg); margin:6px 0; transition:.2s; }
+    .g21-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      height: 64px;
+    }
 
-    .g21-menu { margin-left:auto; }
-    .g21-menu > ul { list-style:none; margin:0; padding:0; display:flex; gap:18px; align-items:center; }
-    .g21-menu > ul > li { position:relative; }
-    .g21-menu > ul > li > a { display:inline-block; padding:8px 4px; font-weight:700; font-size:14px; }
+    .g21-logo {
+      font-weight: 800;
+      letter-spacing: .5px;
+      font-size: 20px;
+      color: var(--fg);
+    }
+
+    .g21-logo img {
+      height: 28px;
+      vertical-align: middle;
+    }
+
+    .g21-burger {
+      display: none;
+      margin-left: auto;
+      background: none;
+      border: 0;
+      width: 40px;
+      height: 32px;
+      cursor: pointer;
+    }
+
+    .g21-burger span {
+      display: block;
+      height: 2px;
+      background: var(--fg);
+      margin: 6px 0;
+      transition: .2s;
+    }
+
+    .g21-menu {
+      margin-left: auto;
+    }
+
+    .g21-menu>ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .g21-menu>ul>li {
+      position: relative;
+    }
+
+    .g21-menu>ul>li>a {
+      display: inline-block;
+      padding: 8px 4px;
+      font-weight: 700;
+      font-size: 14px;
+    }
 
     .g21-sub {
-      position:absolute; left:0; top:100%; display:none; min-width:220px;
-      background:#fff; border:1px solid var(--border); border-radius:12px; padding:8px;
-      box-shadow:0 10px 30px rgba(15,23,42,.08);
+      position: absolute;
+      left: 0;
+      top: 100%;
+      display: none;
+      min-width: 220px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .08);
     }
-    .g21-sub li { list-style:none; }
-    .g21-sub a { display:block; padding:8px 10px; font-weight:500; white-space:nowrap; color:var(--fg); }
-    .g21-sub a:hover { background:#f8fafc; color:var(--accent); }
-    .g21-menu > ul > li:hover > .g21-sub { display:block; }
+
+    .g21-sub li {
+      list-style: none;
+    }
+
+    .g21-sub a {
+      display: block;
+      padding: 8px 10px;
+      font-weight: 500;
+      white-space: nowrap;
+      color: var(--fg);
+    }
+
+    .g21-sub a:hover {
+      background: #f8fafc;
+      color: var(--accent);
+    }
+
+    .g21-menu>ul>li:hover>.g21-sub {
+      display: block;
+    }
 
     @media (max-width: 980px) {
-      .g21-burger { display:block; }
-      .g21-menu {
-        position:fixed; inset:64px 0 0 0; background:#fff; border-top:1px solid var(--border);
-        transform:translateY(-6px); opacity:0; pointer-events:none; transition:.2s;
+      .g21-burger {
+        display: block;
       }
-      .g21-menu.open { transform:translateY(0); opacity:1; pointer-events:auto; }
-      .g21-menu > ul { flex-direction:column; align-items:stretch; gap:0; padding:10px 12px; }
-      .g21-menu > ul > li { border-bottom:1px solid var(--border); }
-      .g21-menu > ul > li > a { padding:14px 6px; font-size:16px; }
-      .g21-sub { position:static; display:none; border:0; box-shadow:none; padding:0; min-width:auto; }
-      .g21-menu > ul > li.open > .g21-sub { display:block; }
+
+      .g21-menu {
+        position: fixed;
+        inset: 64px 0 0 0;
+        background: #fff;
+        border-top: 1px solid var(--border);
+        transform: translateY(-6px);
+        opacity: 0;
+        pointer-events: none;
+        transition: .2s;
+      }
+
+      .g21-menu.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .g21-menu>ul {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 10px 12px;
+      }
+
+      .g21-menu>ul>li {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .g21-menu>ul>li>a {
+        padding: 14px 6px;
+        font-size: 16px;
+      }
+
+      .g21-sub {
+        position: static;
+        display: none;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+        min-width: auto;
+      }
+
+      .g21-menu>ul>li.open>.g21-sub {
+        display: block;
+      }
     }
 
     /* ===== Body layout ===== */
-    main .wrap { padding: 20px 16px; }
-    .layout { display:grid; grid-template-columns: 1fr 320px; gap:28px; align-items:start; }
-    @media (max-width: 980px) { .layout { grid-template-columns:1fr; } }
-
-    .feed-meta { font-size:14px; color:var(--muted); margin: 10px 0 18px; }
-    .source-badge { display:inline-block; font-size:11px; color:#0369a1; background:#e0f2fe; border:1px solid #bae6fd; padding:2px 6px; border-radius:999px; margin-left:6px; vertical-align:middle; }
-
-    .posts { display:grid; gap:14px; }
-    .card {  border-radius:14px; padding:16px; background:#fff;
-      display:grid; grid-template-columns:120px 1fr; gap:14px; }
-    .card:hover{
-        background:#f2dce7ad;
+    main .wrap {
+      padding: 20px 16px;
     }
-    @media (max-width:560px){ .card{ grid-template-columns:1fr; } }
-    .thumb { width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:10px; background:#f8fafc; border:1px solid var(--border); }
-    .card h3 { margin:0 0 6px; font-size:18px; line-height:1.3; }
-    .meta { font-size:12px; color:var(--muted); }
-    .summary { margin-top:6px; font-size:14px; line-height:1.6; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
 
-    .status { text-align:center; color:var(--muted); padding:18px 0; font-size:14px; }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feed-meta {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 10px 0 18px;
+    }
+
+    .source-badge {
+      display: inline-block;
+      font-size: 11px;
+      color: #0369a1;
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      padding: 2px 6px;
+      border-radius: 999px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .posts {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      border-radius: 14px;
+      padding: 16px;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 14px;
+    }
+
+    .card:hover {
+      background: #f2dce7ad;
+    }
+
+    @media (max-width:560px) {
+      .card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .thumb {
+      width: 100%;
+      aspect-ratio: 3/2;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .summary {
+      margin-top: 6px;
+      font-size: 14px;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .status {
+      text-align: center;
+      color: var(--muted);
+      padding: 18px 0;
+      font-size: 14px;
+    }
 
     /* Sidebar */
-    .sidebar { position: static; top: auto; }
-    .side-card { border:1px solid var(--border); border-radius:14px; padding:16px; background:#fff; margin-top: 70px; max-height: none; overflow: visible; }
-    .side-title { margin:0 0 10px; font-size:16px; font-weight:800; }
-    .blog-group { margin: 0 0 14px; }
-    .blog-group h4 { margin: 12px 0 8px; font-size: 13px; color: var(--muted); font-weight: 800; letter-spacing: .5px; }
-    .blog-list { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
-    .blog-list a { display:block; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#f8fafc; color:var(--fg); }
-    .blog-list a.active { border-color:var(--accent); background:#fff1f5; }
-    .blog-sub { display:block; font-size:12px; color:var(--muted); margin-top:2px; }
-    .hint { font-size:12px; color:#0f766e; background:#ecfdf5; border:1px solid #a7f3d0; padding:8px 10px; border-radius:10px; margin-top:10px; }
+    .sidebar {
+      position: static;
+      top: auto;
+    }
+
+    .side-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fff;
+      margin-top: 70px;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .side-title {
+      margin: 0 0 10px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .blog-group {
+      margin: 0 0 14px;
+    }
+
+    .blog-group h4 {
+      margin: 12px 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+
+    .blog-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .blog-list a {
+      display: block;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f8fafc;
+      color: var(--fg);
+    }
+
+    .blog-list a.active {
+      border-color: var(--accent);
+      background: #fff1f5;
+    }
+
+    .blog-sub {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
 
 
     @media (max-width: 980px) {
-    .sidebar { position: static; top: auto; }
-    .side-card { max-height: none; overflow: visible; }
+      .sidebar {
+        position: static;
+        top: auto;
+      }
+
+      .side-card {
+        max-height: none;
+        overflow: visible;
+      }
     }
 
     /* === 側邊彈窗 Drawer === */
     .drawer-overlay {
-    position: fixed; inset: 0;
-    display: flex;              
-    align-items: stretch; justify-content: flex-end;
-    background: rgba(15,23,42,.45);
-    opacity: 0;                  /* 淡入淡出 */
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity .24s ease, visibility .24s step-end;
-    z-index: 100;
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-end;
+      background: rgba(15, 23, 42, .45);
+      opacity: 0;
+      /* 淡入淡出 */
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .24s ease, visibility .24s step-end;
+      z-index: 100;
     }
+
     .drawer-overlay.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: opacity .24s ease, visibility 0s linear; 
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity .24s ease, visibility 0s linear;
     }
 
     .drawer-panel {
-    width: 420px; max-width: 100%; height: 100%;
-    background: #fff; border-left: 1px solid var(--border);
-    box-shadow: -10px 0 30px rgba(15,23,42,.12);
-    padding: 18px 16px 16px; overflow: auto;
-    transform: translateX(100%);          
-    transition: transform .24s ease;      /* 滑入滑出 */
-    will-change: transform;
+      width: 420px;
+      max-width: 100%;
+      height: 100%;
+      background: #fff;
+      border-left: 1px solid var(--border);
+      box-shadow: -10px 0 30px rgba(15, 23, 42, .12);
+      padding: 18px 16px 16px;
+      overflow: auto;
+      transform: translateX(100%);
+      transition: transform .24s ease;
+      /* 滑入滑出 */
+      will-change: transform;
     }
+
     .drawer-overlay.open .drawer-panel {
-    transform: translateX(0);             /* 開啟→滑入 */
+      transform: translateX(0);
+      /* 開啟→滑入 */
     }
 
     .drawer-close {
-    position: sticky; top: 0; float: right; border: 1px solid var(--border);
-    width: 36px; height: 36px; border-radius: 10px; background: #f8fafc; cursor: pointer;
+      margin: 0 0 8px 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #f8fafc;
+      cursor: pointer;
     }
-    .drawer-title { margin: 6px 0 8px; font-size: 20px; line-height: 1.35; font-weight: 800; }
-    .drawer-meta { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+    .drawer-title {
+      margin: 6px 0 8px;
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .drawer-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
 
     .drawer-thumb {
-    width: 100%; aspect-ratio: 16/9; object-fit: cover;
-    border-radius: 12px; border: 1px solid var(--border); background: #f8fafc;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
     }
 
-    .drawer-content { margin-top: 10px; font-size: 14px; line-height: 1.7; white-space: pre-wrap; }
-    .visit-btn {
-    display: inline-block; margin-top: 14px; width: 100%; text-align: center;
-    border-radius: 12px; padding: 12px 0; font-weight: 700;
-    background: #ff3271; color: #fff; border: 1px solid #ff3271;
+    .drawer-content {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
     }
-    .visit-btn:hover { filter: brightness(1.05); }
+
+    .visit-btn {
+      display: inline-block;
+      margin-top: 14px;
+      width: 100%;
+      text-align: center;
+      border-radius: 5px;
+      padding: 12px 0;
+      font-weight: 700;
+      opacity: .9;
+      background: #ff3271;
+      color: #fff;
+      border: 1px solid #ff3271;
+    }
+
+    .visit-btn:hover {
+      opacity: 1;
+      color: #fff;
+    }
 
     @media (max-width: 560px) {
-    .drawer-panel { width: 100%; border-left: 0; border-top: 1px solid var(--border); }
+      .drawer-panel {
+        width: 100%;
+        border-left: 0;
+        border-top: 1px solid var(--border);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-    .drawer-overlay, .drawer-panel { transition: none !important; }
+
+      .drawer-overlay,
+      .drawer-panel {
+        transition: none !important;
+      }
+    }
+
+    .drawer-panel {
+      width: max(50vw, 560px);
+      max-width: 100%;
     }
 
 
 
-
+    /* 手機維持原全寬行為 */
+    @media (max-width: 560px) {
+      .drawer-panel {
+        width: 100%;
+      }
+    }
   </style>
 </head>
+
 <body>
   <!-- ===== Header：god21 版 ===== -->
   <header class="g21-header">
@@ -207,7 +565,7 @@
       <section>
         <div class="feed-meta">
           <h4>友站連結</h4>
-             <h1 id="feedTitle">載入中…</h1>
+          <h1 id="feedTitle">載入中…</h1>
           <span id="sourceType"></span> #見證 #攝理
         </div>
         <div id="posts" class="posts"></div>
@@ -239,23 +597,24 @@
     </div>
     <!-- === 側邊彈窗 === -->
     <div id="drawer" class="drawer-overlay" aria-hidden="true">
-    <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
         <button class="drawer-close" id="drawerClose" aria-label="關閉">✕</button>
         <img id="drawerThumb" class="drawer-thumb" alt="" />
         <h3 id="drawerTitle" class="drawer-title">標題</h3>
         <div id="drawerMeta" class="drawer-meta"></div>
         <div id="drawerContent" class="drawer-content"></div>
-        <a id="drawerVisit" class="visit-btn" href="#" target="_blank" rel="noopener">造訪網站 ↗</a>
-    </div>
+        <a id="drawerVisit" class="visit-btn" href="#" target="_blank" rel="noopener">造訪網站 <span
+            class="fa fa-long-arrow-right"></span></a>
+      </div>
     </div>
 
   </main>
 
   <script>
-        /* 預設圖片 */
-        const DEFAULT_THUMB =
-        'data:image/svg+xml;utf8,' +
-        encodeURIComponent(`
+    /* 預設圖片 */
+    const DEFAULT_THUMB =
+      'data:image/svg+xml;utf8,' +
+      encodeURIComponent(`
             <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400">
             <rect width="100%" height="100%" fill="#f1f5f9"/>
             <g fill="#94a3b8" font-family="system-ui, -apple-system, Segoe UI, Roboto" text-anchor="middle">
@@ -264,55 +623,59 @@
             </svg>
         `);
 
-        /* YouTube 縮圖 */
-        function youTubeIdFromLink(link){
-        try{
-            const u = new URL(link);
-            if (u.hostname === 'youtu.be') return u.pathname.slice(1);
-            if (u.hostname.includes('youtube.com')) return u.searchParams.get('v') || '';
-        }catch{}
-        return '';
-        }
-        function youTubeThumb(link){
-        const id = youTubeIdFromLink(link);
-        return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : '';
-        }
+    /* YouTube 縮圖 */
+    function youTubeIdFromLink(link) {
+      try {
+        const u = new URL(link);
+        if (u.hostname === 'youtu.be') return u.pathname.slice(1);
+        if (u.hostname.includes('youtube.com')) return u.searchParams.get('v') || '';
+      } catch { }
+      return '';
+    }
+    function youTubeThumb(link) {
+      const id = youTubeIdFromLink(link);
+      return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : '';
+    }
 
     /* 友站資源清單 */
     const GROUPS = {
-    sites: [
+      sites: [
         { name: "艾莉嘻電影 Ellie See Movie", url: "https://providencebride.blogspot.com", type: "blogger", sub: "providencebride.blogspot.com" },
         { name: "攝理人加菲梅格的文字事工", url: "http://garfywiththelord.blogspot.com", type: "blogger", sub: "garfywiththelord.blogspot.com" },
         { name: "太陽光", url: "http://moonseasunshine.blogspot.com", type: "blogger", sub: "moonseasunshine.blogspot.com" },
         { name: "日本教我的那些事", url: "https://easycatwalk.com", type: "wordpress", sub: "easycatwalk.com" },
         { name: "攝理家庭天國", url: "https://mrcloud.tw", type: "wordpress", sub: "mrcloud.tw" },
         { name: "靈光時刻", url: "https://spiritual-words.com", type: "wordpress", sub: "spiritual-words.com" }
-    ],
-    podcasts: [
-        { name: "他來自月明洞", type: "rss",
-        rssUrl: "https://feed.firstory.me/rss/user/cm18mp7d9000301y9giyv724d",
-        sub: "Firstory RSS" ,
-        external: "https://podcasts.apple.com/tw/podcast/%E4%BB%96%E4%BE%86%E8%87%AA%E6%9C%88%E6%98%8E%E6%B4%9E/id1773638747"
+      ],
+      podcasts: [
+        {
+          name: "他來自月明洞", type: "rss",
+          rssUrl: "https://feed.firstory.me/rss/user/cm18mp7d9000301y9giyv724d",
+          sub: "Firstory RSS",
+          external: "https://podcasts.apple.com/tw/podcast/%E4%BB%96%E4%BE%86%E8%87%AA%E6%9C%88%E6%98%8E%E6%B4%9E/id1773638747"
         },
-        { name: "腦內減醣俱樂部", type: "rss",
-        rssUrl: "https://feeds.soundon.fm/podcasts/a3dafad4-aa97-4f55-83a1-a620894a4d0a.xml",
-        sub: "SoundOn RSS",
-        external: "https://podcasts.apple.com/tw/podcast/%E8%85%A6%E8%A2%8B%E6%B8%9B%E9%86%A3%E4%BF%B1%E6%A8%82%E9%83%A8/id1813368324"
+        {
+          name: "腦內減醣俱樂部", type: "rss",
+          rssUrl: "https://feeds.soundon.fm/podcasts/a3dafad4-aa97-4f55-83a1-a620894a4d0a.xml",
+          sub: "SoundOn RSS",
+          external: "https://podcasts.apple.com/tw/podcast/%E8%85%A6%E8%A2%8B%E6%B8%9B%E9%86%A3%E4%BF%B1%E6%A8%82%E9%83%A8/id1813368324"
         },
-        { name: "V小姐的美聲聖經", type: "rss",
-        rssUrl: "https://feed.firstory.me/rss/user/cke9fxwx5piac08394k84xxln",
-        sub: "Firstory RSS",
-        external: "https://podcasts.apple.com/tw/podcast/v%E5%B0%8F%E5%A7%90%E7%9A%84%E7%BE%8E%E8%81%B2%E8%81%96%E7%B6%93/id1529083649"
+        {
+          name: "V小姐的美聲聖經", type: "rss",
+          rssUrl: "https://feed.firstory.me/rss/user/cke9fxwx5piac08394k84xxln",
+          sub: "Firstory RSS",
+          external: "https://podcasts.apple.com/tw/podcast/v%E5%B0%8F%E5%A7%90%E7%9A%84%E7%BE%8E%E8%81%B2%E8%81%96%E7%B6%93/id1529083649"
         }
-    ],
-    youtube: [
-        { name: "CGM基督教福音宣教會影音頻道",
-        type: "youtube",
-        channelId: "UCsWyzBTDj2uDPe-YtKLDUFQ",
-        sub: "@CGMTaiwan",
-        external: "https://www.youtube.com/@CGMTaiwan"
+      ],
+      youtube: [
+        {
+          name: "CGM基督教福音宣教會影音頻道",
+          type: "youtube",
+          channelId: "UCsWyzBTDj2uDPe-YtKLDUFQ",
+          sub: "@CGMTaiwan",
+          external: "https://www.youtube.com/@CGMTaiwan"
         }
-    ]
+      ]
     };
 
 
@@ -332,167 +695,167 @@
 
     /* ===== Header 漢堡 ===== */
     const burger = document.querySelector(".g21-burger");
-    const menu   = document.querySelector(".g21-menu");
+    const menu = document.querySelector(".g21-menu");
     burger.addEventListener("click", () => menu.classList.toggle("open"));
 
     /* ===== 小工具 ===== */
-    function formatDate(s){
-      try { return new Date(s).toLocaleString("zh-TW",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"});}
-      catch { return s||""; }
+    function formatDate(s) {
+      try { return new Date(s).toLocaleString("zh-TW", { timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }); }
+      catch { return s || ""; }
     }
-    function stripHtml(html, maxLen=180){
-      const tmp=document.createElement("div"); tmp.innerHTML=html||"";
-      const t=(tmp.textContent||tmp.innerText||"").replace(/\s+/g," ").trim();
-      return t.length>maxLen ? t.slice(0,maxLen)+"…" : t;
+    function stripHtml(html, maxLen = 180) {
+      const tmp = document.createElement("div"); tmp.innerHTML = html || "";
+      const t = (tmp.textContent || tmp.innerText || "").replace(/\s+/g, " ").trim();
+      return t.length > maxLen ? t.slice(0, maxLen) + "…" : t;
     }
-    function firstImageFromHtml(html){
-      if(!html) return "";
-      const tmp=document.createElement("div"); tmp.innerHTML=html;
-      const img=tmp.querySelector("img"); return img ? img.src : "";
+    function firstImageFromHtml(html) {
+      if (!html) return "";
+      const tmp = document.createElement("div"); tmp.innerHTML = html;
+      const img = tmp.querySelector("img"); return img ? img.src : "";
     }
-    function setStatus(txt){ statusEl.textContent=txt; }
-    function showHint(txt){ hintsEl.style.display = txt ? "block" : "none"; hintsEl.textContent = txt || ""; }
+    function setStatus(txt) { statusEl.textContent = txt; }
+    function showHint(txt) { hintsEl.style.display = txt ? "block" : "none"; hintsEl.textContent = txt || ""; }
 
-    function makeCard({title,link,date,author,summary,thumb}){
-    const card = document.createElement("article");
-    card.className = "card";
+    function makeCard({ title, link, date, author, summary, thumb }) {
+      const card = document.createElement("article");
+      card.className = "card";
 
-    // 安全文字
-    const t  = title || "（無標題）";
-    const md = date ? formatDate(date) : "";
-    const au = author ? ` · ${author}` : "";
-    const sumText = summary || "";
+      // 安全文字
+      const t = title || "（無標題）";
+      const md = date ? formatDate(date) : "";
+      const au = author ? ` · ${author}` : "";
+      const sumText = summary || "";
 
-    // 彈窗可用的資料存在 data-*
-    card.dataset.title   = t;
-    card.dataset.link    = link || "#";
-    card.dataset.date    = md;
-    card.dataset.author  = author || "";
-    card.dataset.summary = sumText;
-    card.dataset.thumb   = (thumb || DEFAULT_THUMB);
+      // 彈窗可用的資料存在 data-*
+      card.dataset.title = t;
+      card.dataset.link = link || "#";
+      card.dataset.date = md;
+      card.dataset.author = author || "";
+      card.dataset.summary = sumText;
+      card.dataset.thumb = (thumb || DEFAULT_THUMB);
 
-    card.innerHTML = `
+      card.innerHTML = `
         <img class="thumb" src="${thumb || DEFAULT_THUMB}" alt="">
         <div>
         <h3><a href="${link || '#'}" target="_blank" rel="noopener">${t}</a></h3>
         <div class="meta">${md}${au}</div>
         <div class="summary">${sumText}</div>
         </div>`;
-    return card;
+      return card;
     }
 
 
     // Drawer DOM
-    const drawerEl     = document.getElementById("drawer");
-    const drawerClose  = document.getElementById("drawerClose");
-    const drawerThumb  = document.getElementById("drawerThumb");
-    const drawerTitle  = document.getElementById("drawerTitle");
-    const drawerMeta   = document.getElementById("drawerMeta");
-    const drawerContent= document.getElementById("drawerContent");
-    const drawerVisit  = document.getElementById("drawerVisit");
+    const drawerEl = document.getElementById("drawer");
+    const drawerClose = document.getElementById("drawerClose");
+    const drawerThumb = document.getElementById("drawerThumb");
+    const drawerTitle = document.getElementById("drawerTitle");
+    const drawerMeta = document.getElementById("drawerMeta");
+    const drawerContent = document.getElementById("drawerContent");
+    const drawerVisit = document.getElementById("drawerVisit");
 
     // 開/關
-    function openDrawer(data){
-    drawerThumb.src = data.thumb || DEFAULT_THUMB;
-    drawerTitle.textContent = data.title || "（無標題）";
-    drawerMeta.textContent  = [data.date || "", data.author ? `· ${data.author}` : ""].join(" ").trim();
-    drawerContent.textContent = data.summary || ""; // 用純文字摘要（安全）
-    drawerVisit.href = data.link || "#";
+    function openDrawer(data) {
+      drawerThumb.src = data.thumb || DEFAULT_THUMB;
+      drawerTitle.textContent = data.title || "（無標題）";
+      drawerMeta.textContent = [data.date || "", data.author ? `· ${data.author}` : ""].join(" ").trim();
+      drawerContent.textContent = data.summary || ""; // 用純文字摘要（安全）
+      drawerVisit.href = data.link || "#";
 
-    drawerEl.classList.add("open");
-    drawerEl.setAttribute("aria-hidden","false");
-    document.body.style.overflow = "hidden";
+      drawerEl.classList.add("open");
+      drawerEl.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
     }
-    function closeDrawer(){
-    drawerEl.classList.remove("open");
-    drawerEl.setAttribute("aria-hidden","true");
-    document.body.style.overflow = "";
+    function closeDrawer() {
+      drawerEl.classList.remove("open");
+      drawerEl.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
     }
 
     // 關閉事件：按鈕、按遮罩、ESC
     drawerClose.addEventListener("click", closeDrawer);
-    drawerEl.addEventListener("click", (e)=> {
-    if (e.target === drawerEl) closeDrawer();
+    drawerEl.addEventListener("click", (e) => {
+      if (e.target === drawerEl) closeDrawer();
     });
-    window.addEventListener("keydown", (e)=> {
-    if (e.key === "Escape" && drawerEl.classList.contains("open")) closeDrawer();
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && drawerEl.classList.contains("open")) closeDrawer();
     });
 
     // 點任何卡片（或卡片內的標題連結）開啟 Drawer
     postsEl.addEventListener("click", (e) => {
-    const card = e.target.closest(".card");
-    if (!card) return;
+      const card = e.target.closest(".card");
+      if (!card) return;
 
-    // 如果使用者按住 Ctrl/Cmd 想要在新分頁開連結，不要攔截
-    const anchor = e.target.closest("a");
-    if (anchor && (e.metaKey || e.ctrlKey)) return;
+      // 如果使用者按住 Ctrl/Cmd 想要在新分頁開連結，不要攔截
+      const anchor = e.target.closest("a");
+      if (anchor && (e.metaKey || e.ctrlKey)) return;
 
-    // 攔截預設導向，改為開彈窗
-    if (anchor) e.preventDefault();
+      // 攔截預設導向，改為開彈窗
+      if (anchor) e.preventDefault();
 
-    openDrawer({
-        title:   card.dataset.title,
-        link:    card.dataset.link,
-        date:    card.dataset.date,
-        author:  card.dataset.author,
+      openDrawer({
+        title: card.dataset.title,
+        link: card.dataset.link,
+        date: card.dataset.date,
+        author: card.dataset.author,
         summary: card.dataset.summary,
-        thumb:   card.dataset.thumb
-    });
+        thumb: card.dataset.thumb
+      });
     });
 
     /* ===== 取資料：Blogger / WordPress / RSS / YouTube ===== */
     const PROXY = url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
 
-    function fetchBlogger({ baseUrl, startIndex, maxResults }){
-      return new Promise((resolve,reject)=>{
-        const cb="jsonp_cb_"+Math.random().toString(36).slice(2);
-        const url=`${baseUrl.replace(/\/+$/,"")}/feeds/posts/default?alt=json-in-script&orderby=updated&start-index=${startIndex}&max-results=${maxResults}&callback=${cb}`;
-        window[cb]=(data)=>{
-          try{
-            const title=data?.feed?.title?.$t || baseUrl;
-            const entries=data?.feed?.entry||[];
-            const items=entries.map(e=>{
-              const linkObj=(e.link||[]).find(l=>l.rel==="alternate");
-              const link=linkObj?linkObj.href:(e.link?.[0]?.href||baseUrl);
-              const html=e?.content?.$t||e?.summary?.$t||"";
+    function fetchBlogger({ baseUrl, startIndex, maxResults }) {
+      return new Promise((resolve, reject) => {
+        const cb = "jsonp_cb_" + Math.random().toString(36).slice(2);
+        const url = `${baseUrl.replace(/\/+$/, "")}/feeds/posts/default?alt=json-in-script&orderby=updated&start-index=${startIndex}&max-results=${maxResults}&callback=${cb}`;
+        window[cb] = (data) => {
+          try {
+            const title = data?.feed?.title?.$t || baseUrl;
+            const entries = data?.feed?.entry || [];
+            const items = entries.map(e => {
+              const linkObj = (e.link || []).find(l => l.rel === "alternate");
+              const link = linkObj ? linkObj.href : (e.link?.[0]?.href || baseUrl);
+              const html = e?.content?.$t || e?.summary?.$t || "";
               return {
-                title:e?.title?.$t||"（無標題）",
+                title: e?.title?.$t || "（無標題）",
                 link,
-                date:e?.updated?.$t||e?.published?.$t||"",
-                author:e?.author?.[0]?.name?.$t||"",
-                summary:stripHtml(html),
-                thumb:firstImageFromHtml(html)
+                date: e?.updated?.$t || e?.published?.$t || "",
+                author: e?.author?.[0]?.name?.$t || "",
+                summary: stripHtml(html),
+                thumb: firstImageFromHtml(html)
               };
             });
             resolve({ title, items });
-          }catch(err){ reject(err); } finally{ delete window[cb]; s.remove(); }
+          } catch (err) { reject(err); } finally { delete window[cb]; s.remove(); }
         };
-        const s=document.createElement("script"); s.src=url;
-        s.onerror=()=>{ delete window[cb]; s.remove(); reject(new Error("JSONP 載入失敗")); };
+        const s = document.createElement("script"); s.src = url;
+        s.onerror = () => { delete window[cb]; s.remove(); reject(new Error("JSONP 載入失敗")); };
         document.body.appendChild(s);
       });
     }
 
-    async function fetchWordPress({ baseUrl, page, perPage }){
-      const base=baseUrl.replace(/\/+$/,"");
-      const api=`${base}/wp-json/wp/v2/posts?_embed=1&per_page=${perPage}&page=${page+1}`;
-      const res=await fetch(api);
-      if(!res.ok) throw new Error("WordPress API 請求失敗");
-      const data=await res.json();
-      let siteTitle=baseUrl;
-      try{
-        const info=await fetch(`${base}/wp-json`);
-        if(info.ok){ const j=await info.json(); if(j?.name) siteTitle=j.name; }
-      }catch{}
-      const items=data.map(p=>{
-        const title=(p.title?.rendered||"").replace(/<[^>]+>/g,"") || "（無標題）";
-        const link=p.link || `${base}/?p=${p.id}`;
-        const html=p.content?.rendered || p.excerpt?.rendered || "";
-        const media=p._embedded?.["wp:featuredmedia"]?.[0];
+    async function fetchWordPress({ baseUrl, page, perPage }) {
+      const base = baseUrl.replace(/\/+$/, "");
+      const api = `${base}/wp-json/wp/v2/posts?_embed=1&per_page=${perPage}&page=${page + 1}`;
+      const res = await fetch(api);
+      if (!res.ok) throw new Error("WordPress API 請求失敗");
+      const data = await res.json();
+      let siteTitle = baseUrl;
+      try {
+        const info = await fetch(`${base}/wp-json`);
+        if (info.ok) { const j = await info.json(); if (j?.name) siteTitle = j.name; }
+      } catch { }
+      const items = data.map(p => {
+        const title = (p.title?.rendered || "").replace(/<[^>]+>/g, "") || "（無標題）";
+        const link = p.link || `${base}/?p=${p.id}`;
+        const html = p.content?.rendered || p.excerpt?.rendered || "";
+        const media = p._embedded?.["wp:featuredmedia"]?.[0];
         return {
-          title, link, date:p.date_gmt||p.date,
-          author:p._embedded?.author?.[0]?.name||"",
-          summary:stripHtml(html),
+          title, link, date: p.date_gmt || p.date,
+          author: p._embedded?.author?.[0]?.name || "",
+          summary: stripHtml(html),
           thumb: media?.source_url || firstImageFromHtml(html)
         };
       });
@@ -501,223 +864,223 @@
 
     /* ========= 多重代理：任一成功就回傳文字 ========= */
     const PROXIES = [
-    // AllOrigins JSON: 回傳 { contents: "<xml..." }
-    (url) => ({ req: `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, mode: "json" }),
-    // AllOrigins RAW: 直接回純文字
-    (url) => ({ req: `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, mode: "text" }),
-    // isomorphic-git CORS 代理（簡單、常用）
-    (url) => ({ req: `https://cors.isomorphic-git.org/${url}`, mode: "text" }),
+      // AllOrigins JSON: 回傳 { contents: "<xml..." }
+      (url) => ({ req: `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, mode: "json" }),
+      // AllOrigins RAW: 直接回純文字
+      (url) => ({ req: `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, mode: "text" }),
+      // isomorphic-git CORS 代理（簡單、常用）
+      (url) => ({ req: `https://cors.isomorphic-git.org/${url}`, mode: "text" }),
     ];
 
-async function fetchTextThroughProxies(url){
-  let lastErr;
-  for (const make of PROXIES) {
-    const { req, mode } = make(url);
-    try {
-      const res = await fetch(req);
-      if (!res.ok) throw new Error(res.status + " " + res.statusText);
-      if (mode === "json") {
-        const j = await res.json();
-        if (j && typeof j.contents === "string" && j.contents.trim()) return j.contents;
-        throw new Error("Empty contents from JSON proxy");
-      } else {
-        const t = await res.text();
-        if (t && t.trim()) return t;
-        throw new Error("Empty text from proxy");
+    async function fetchTextThroughProxies(url) {
+      let lastErr;
+      for (const make of PROXIES) {
+        const { req, mode } = make(url);
+        try {
+          const res = await fetch(req);
+          if (!res.ok) throw new Error(res.status + " " + res.statusText);
+          if (mode === "json") {
+            const j = await res.json();
+            if (j && typeof j.contents === "string" && j.contents.trim()) return j.contents;
+            throw new Error("Empty contents from JSON proxy");
+          } else {
+            const t = await res.text();
+            if (t && t.trim()) return t;
+            throw new Error("Empty text from proxy");
+          }
+        } catch (e) { lastErr = e; /* 試下一個代理 */ }
       }
-    } catch (e) { lastErr = e; /* 試下一個代理 */ }
-  }
-  throw lastErr || new Error("All proxies failed");
-}
+      throw lastErr || new Error("All proxies failed");
+    }
 
-/* ========= RSS/Atom 解析（含 Podcast 擴充） ========= */
-function pickText(el, sel){
-  return el.querySelector(sel)?.textContent?.trim() || "";
-}
-function pickAttr(el, sel, attr){
-  const node = el.querySelector(sel); return node ? (node.getAttribute(attr) || "").trim() : "";
-}
-function firstImgFromHtml(html){
-  const tmp = document.createElement("div"); tmp.innerHTML = html || "";
-  const img = tmp.querySelector("img"); return img ? img.src : "";
-}
+    /* ========= RSS/Atom 解析（含 Podcast 擴充） ========= */
+    function pickText(el, sel) {
+      return el.querySelector(sel)?.textContent?.trim() || "";
+    }
+    function pickAttr(el, sel, attr) {
+      const node = el.querySelector(sel); return node ? (node.getAttribute(attr) || "").trim() : "";
+    }
+    function firstImgFromHtml(html) {
+      const tmp = document.createElement("div"); tmp.innerHTML = html || "";
+      const img = tmp.querySelector("img"); return img ? img.src : "";
+    }
 
-async function fetchRSS({ feedUrl }){
-  const xmlStr = await fetchTextThroughProxies(feedUrl);
-  const doc = new DOMParser().parseFromString(xmlStr, "text/xml");
+    async function fetchRSS({ feedUrl }) {
+      const xmlStr = await fetchTextThroughProxies(feedUrl);
+      const doc = new DOMParser().parseFromString(xmlStr, "text/xml");
 
-  // 標題（Channel/Feed）
-  const channelTitle = pickText(doc, "channel>title") || pickText(doc, "feed>title") || feedUrl;
+      // 標題（Channel/Feed）
+      const channelTitle = pickText(doc, "channel>title") || pickText(doc, "feed>title") || feedUrl;
 
-  const items = [];
+      const items = [];
 
-  // —— RSS 2.0 —— //
-  doc.querySelectorAll("channel>item").forEach(item=>{
-    const title = pickText(item, "title") || "（無標題）";
-    // link：Podcast 常見是網站連結，真的播放連結多在 <enclosure>
-    let link = pickText(item, "link");
-    const guid = pickText(item, "guid");
-    const enclosureUrl = pickAttr(item, "enclosure", "url");
-    if (!link) link = enclosureUrl || guid || "#";
+      // —— RSS 2.0 —— //
+      doc.querySelectorAll("channel>item").forEach(item => {
+        const title = pickText(item, "title") || "（無標題）";
+        // link：Podcast 常見是網站連結，真的播放連結多在 <enclosure>
+        let link = pickText(item, "link");
+        const guid = pickText(item, "guid");
+        const enclosureUrl = pickAttr(item, "enclosure", "url");
+        if (!link) link = enclosureUrl || guid || "#";
 
-    const date = pickText(item, "pubDate") || pickText(item, "updated") || "";
-    const author = pickText(item, "author") || pickText(item, "dc\\:creator");
+        const date = pickText(item, "pubDate") || pickText(item, "updated") || "";
+        const author = pickText(item, "author") || pickText(item, "dc\\:creator");
 
-    const desc = pickText(item, "description") || pickText(item, "content\\:encoded") || "";
+        const desc = pickText(item, "description") || pickText(item, "content\\:encoded") || "";
 
-    // 縮圖：itunes:image / media:thumbnail / media:content / HTML第一圖
-    const itunesImg = pickAttr(item, "itunes\\:image", "href");
-    const mediaThumb = pickAttr(item, "media\\:thumbnail, thumbnail", "url");
-    const mediaContent = pickAttr(item, "media\\:content, content", "url");
-    const thumb = itunesImg || mediaThumb || mediaContent || firstImgFromHtml(desc) || "";
+        // 縮圖：itunes:image / media:thumbnail / media:content / HTML第一圖
+        const itunesImg = pickAttr(item, "itunes\\:image", "href");
+        const mediaThumb = pickAttr(item, "media\\:thumbnail, thumbnail", "url");
+        const mediaContent = pickAttr(item, "media\\:content, content", "url");
+        const thumb = itunesImg || mediaThumb || mediaContent || firstImgFromHtml(desc) || "";
 
-    items.push({
-      title, link, date, author,
-      summary: stripHtml(desc),
-      thumb
-    });
-  });
-
-  // —— Atom —— //
-  if (items.length === 0) {
-    doc.querySelectorAll("feed>entry").forEach(entry=>{
-      const title = pickText(entry, "title") || "（無標題）";
-      let link = pickAttr(entry, "link[rel='alternate']", "href")
-              || pickAttr(entry, "link", "href") || "#";
-      const date = pickText(entry, "updated") || pickText(entry, "published") || "";
-      const author = pickText(entry, "author>name");
-      const content = pickText(entry, "content") || pickText(entry, "summary") || "";
-
-      const itunesImg = pickAttr(entry, "itunes\\:image", "href");
-      const mediaThumb = pickAttr(entry, "media\\:thumbnail, thumbnail", "url");
-      const mediaContent = pickAttr(entry, "media\\:content, content", "url");
-      const thumb = itunesImg || mediaThumb || mediaContent || firstImgFromHtml(content) || "";
-
-      items.push({
-        title, link, date, author,
-        summary: stripHtml(content),
-        thumb
+        items.push({
+          title, link, date, author,
+          summary: stripHtml(desc),
+          thumb
+        });
       });
-    });
-  }
 
-  return { title: channelTitle, items };
-}
+      // —— Atom —— //
+      if (items.length === 0) {
+        doc.querySelectorAll("feed>entry").forEach(entry => {
+          const title = pickText(entry, "title") || "（無標題）";
+          let link = pickAttr(entry, "link[rel='alternate']", "href")
+            || pickAttr(entry, "link", "href") || "#";
+          const date = pickText(entry, "updated") || pickText(entry, "published") || "";
+          const author = pickText(entry, "author>name");
+          const content = pickText(entry, "content") || pickText(entry, "summary") || "";
+
+          const itunesImg = pickAttr(entry, "itunes\\:image", "href");
+          const mediaThumb = pickAttr(entry, "media\\:thumbnail, thumbnail", "url");
+          const mediaContent = pickAttr(entry, "media\\:content, content", "url");
+          const thumb = itunesImg || mediaThumb || mediaContent || firstImgFromHtml(content) || "";
+
+          items.push({
+            title, link, date, author,
+            summary: stripHtml(content),
+            thumb
+          });
+        });
+      }
+
+      return { title: channelTitle, items };
+    }
 
 
     async function fetchYouTube({ channelId, page }) {
-    const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(channelId)}`;
-    const { title, items } = await fetchRSS({ feedUrl });
-    const start = page * PAGE_SIZE;
-    const sliced = items.slice(start, start + PAGE_SIZE).map(x => ({
+      const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(channelId)}`;
+      const { title, items } = await fetchRSS({ feedUrl });
+      const start = page * PAGE_SIZE;
+      const sliced = items.slice(start, start + PAGE_SIZE).map(x => ({
         title: x.title,
         link: x.link,
         date: x.date,
         author: "YouTube",
         summary: x.summary,
         thumb: x.thumb || youTubeThumb(x.link) || DEFAULT_THUMB
-    }));
-    return { title: title || "YouTube", items: sliced, total: items.length };
+      }));
+      return { title: title || "YouTube", items: sliced, total: items.length };
     }
 
-    async function fetchBatch(){
+    async function fetchBatch() {
       const c = state.current;
       const page = state.page;
-      if(!c) throw new Error("來源未設定");
+      if (!c) throw new Error("來源未設定");
 
-      if(c.type==="blogger"){
+      if (c.type === "blogger") {
         const startIndex = page * PAGE_SIZE + 1;
-        return await fetchBlogger({ baseUrl:c.url, startIndex, maxResults:PAGE_SIZE });
+        return await fetchBlogger({ baseUrl: c.url, startIndex, maxResults: PAGE_SIZE });
       }
-      if(c.type==="wordpress"){
-        return await fetchWordPress({ baseUrl:c.url, page, perPage:PAGE_SIZE });
+      if (c.type === "wordpress") {
+        return await fetchWordPress({ baseUrl: c.url, page, perPage: PAGE_SIZE });
       }
-      if(c.type==="rss"){
+      if (c.type === "rss") {
         // Podcast：一次抓很多，用 slice 做「假分頁」
         const full = await fetchRSS({ feedUrl: c.rssUrl });
         const start = page * PAGE_SIZE;
         const items = full.items.slice(start, start + PAGE_SIZE);
         return { title: full.title, items, total: full.items.length };
       }
-      if(c.type==="youtube"){
+      if (c.type === "youtube") {
         return await fetchYouTube({ channelId: c.channelId, page });
       }
       throw new Error("未知來源型態");
     }
 
-    async function loadMore(){
-      if(state.loading || state.done) return;
-      state.loading=true; setStatus("正在載入…");
-      try{
+    async function loadMore() {
+      if (state.loading || state.done) return;
+      state.loading = true; setStatus("正在載入…");
+      try {
         const batch = await fetchBatch();
         const { title, items, total } = batch;
-        if(state.page===0){
+        if (state.page === 0) {
           feedTitleEl.textContent = title || (state.current.name || "");
           sourceTypeEl.textContent = (state.current.type || "").toUpperCase();
           // 若是 Podcast 未填 RSS，給提示
-          if(state.current.type==="rss" && (!state.current.rssUrl || state.current.rssUrl.startsWith("https://REPLACE_"))){
+          if (state.current.type === "rss" && (!state.current.rssUrl || state.current.rssUrl.startsWith("https://REPLACE_"))) {
             showHint(`提示：這個 Podcast 需要填入真正的 RSS 連結才能顯示。先點右側 Apple 頁面找到主機平台的 RSS，貼到程式中的 rssUrl。`);
-          } else if (state.current.type==="youtube" && (!state.current.channelId || state.current.channelId==="CHANNEL_ID_HERE")){
+          } else if (state.current.type === "youtube" && (!state.current.channelId || state.current.channelId === "CHANNEL_ID_HERE")) {
             showHint(`提示：請把 CHANNEL_ID_HERE 換成實際的 YouTube channel_id（在頻道頁原始碼或「關於」→「分享」可找到）。`);
           } else {
             showHint("");
           }
         }
-        if(!items || items.length===0){ state.done=true; setStatus("沒有更多了"); return; }
-        items.forEach(p=>postsEl.appendChild(makeCard(p)));
-        state.page+=1; setStatus("");
+        if (!items || items.length === 0) { state.done = true; setStatus("沒有更多了"); return; }
+        items.forEach(p => postsEl.appendChild(makeCard(p)));
+        state.page += 1; setStatus("");
 
         // 如果總數已經用完，標記 done
         if (typeof total === "number" && state.page * PAGE_SIZE >= total) {
           state.done = true;
           setStatus("沒有更多了");
         }
-      }catch(e){
+      } catch (e) {
         console.error(e);
         setStatus("載入失敗，請稍後再試");
-        state.done=true;
-      } finally { state.loading=false; }
+        state.done = true;
+      } finally { state.loading = false; }
     }
 
-    function resetAndLoad(source){
-      state={ current: source, page:0, loading:false, done:false, scrollLock:false };
-      postsEl.innerHTML=""; feedTitleEl.textContent="載入中…"; sourceTypeEl.textContent=source.type.toUpperCase(); showHint("");
-      document.querySelectorAll(".blog-list a").forEach(a=>a.classList.toggle("active", a.dataset.key===source._key));
+    function resetAndLoad(source) {
+      state = { current: source, page: 0, loading: false, done: false, scrollLock: false };
+      postsEl.innerHTML = ""; feedTitleEl.textContent = "載入中…"; sourceTypeEl.textContent = source.type.toUpperCase(); showHint("");
+      document.querySelectorAll(".blog-list a").forEach(a => a.classList.toggle("active", a.dataset.key === source._key));
       loadMore();
     }
 
-    function buildGroup(listEl, items, groupKey){
+    function buildGroup(listEl, items, groupKey) {
       listEl.innerHTML = "";
       items.forEach((s, idx) => {
         s._key = `${groupKey}-${idx}`;
-        const li=document.createElement("li");
-        const a=document.createElement("a");
-        a.href="javascript:void(0)";
-        a.dataset.key=s._key;
-        a.textContent=s.name;
-        const sub=document.createElement("span"); sub.className="blog-sub";
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = "javascript:void(0)";
+        a.dataset.key = s._key;
+        a.textContent = s.name;
+        const sub = document.createElement("span"); sub.className = "blog-sub";
         sub.textContent = s.sub || s.url || s.external || "";
         a.appendChild(sub);
 
-        a.addEventListener("click", ()=> resetAndLoad(s));
+        a.addEventListener("click", () => resetAndLoad(s));
         li.appendChild(a); listEl.appendChild(li);
 
         // 預設第一個加 active
-        if(groupKey===DEFAULT_GROUP && idx===DEFAULT_INDEX) a.classList.add("active");
+        if (groupKey === DEFAULT_GROUP && idx === DEFAULT_INDEX) a.classList.add("active");
       });
     }
 
-    function buildSidebar(){
-      buildGroup(document.getElementById("list-sites"),   GROUPS.sites,   "sites");
-      buildGroup(document.getElementById("list-podcasts"),GROUPS.podcasts,"podcasts");
+    function buildSidebar() {
+      buildGroup(document.getElementById("list-sites"), GROUPS.sites, "sites");
+      buildGroup(document.getElementById("list-podcasts"), GROUPS.podcasts, "podcasts");
       buildGroup(document.getElementById("list-youtube"), GROUPS.youtube, "youtube");
     }
 
-    function onScroll(){
-      if(state.scrollLock || state.loading || state.done) return;
-      const threshold=200;
-      if(window.innerHeight + window.scrollY >= document.body.offsetHeight - threshold){
-        state.scrollLock=true; loadMore().finally(()=> state.scrollLock=false);
+    function onScroll() {
+      if (state.scrollLock || state.loading || state.done) return;
+      const threshold = 200;
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - threshold) {
+        state.scrollLock = true; loadMore().finally(() => state.scrollLock = false);
       }
     }
 
@@ -728,4 +1091,5 @@ async function fetchRSS({ feedUrl }){
     window.addEventListener("scroll", onScroll);
   </script>
 </body>
+
 </html>
